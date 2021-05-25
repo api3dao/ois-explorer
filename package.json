@@ -1,0 +1,11 @@
+{
+  "name": "ois-explorer",
+  "version": "0.1.0",
+  "description": "visual explorer for ois's",
+  "main": "index.js",
+  "author": "dextracker <igothacked97@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "create-react-app": "^4.0.3"
+  }
+}
