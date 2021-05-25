@@ -2,9 +2,9 @@
 
 ### At Root:
 ```yarn install```
-### Enter Ois-Explorer
+### Enter Ois-Explorer:
 ```cd ois-explorer```
-### Install Dependencies
+### Install Dependencies:
 ```yarn install```
-### Run
+### Run:
 ```yarn start```
