@@ -6,6 +6,11 @@
   "author": "dextracker <igothacked97@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "create-react-app": "^4.0.3"
+    "create-react-app": "^4.0.3",
+    "react-scripts": "^4.0.3"
+  },
+  "scripts": {
+    "start": "(cd ois-explorer && react-scripts start)",
+    "build": "(cd ois-explorer && react-scripts build)"
   }
 }

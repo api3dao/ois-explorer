@@ -144,7 +144,7 @@ export function Upload({ children }) {
       <div>
       {/* {"uploaded file content -- " + files} */}
       <Panel style={{ padding: '1rem 0 0 0 ', width: '50%' }}>
-      <div style={{ margin: 'auto', textAlign: 'left', width: '100%', height: '100%' }}>
+      <div style={{  marginTop: 'none', margin: 'auto', textAlign: 'left', width: '100%', height: '100%' }}>
         <h4>Node Settings</h4>
         {segOIS && (
           <div style={{ display: "flex", fontSize: '11px'}}>
