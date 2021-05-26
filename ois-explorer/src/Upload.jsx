@@ -18,6 +18,12 @@ const panelPseudo = css`
     }
   }
 `
+const styledText = css`
+  h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+  }
+`
 
 const TableData = styled.td`
     border: 0px solid #FFFFFF;
@@ -115,9 +121,15 @@ export function Upload({ children }) {
       let ois = getOISComponents(e.target.result);
       let segmentedOIS = new typedOIS(ois);
       if(!segOIS){setSegOIS(segmentedOIS)};
-      console.log(segmentedOIS);
+      //console.log(segmentedOIS);
     };
   };
+  function matchEndpoints(endpoints, endpointString, i){
+    let endpoint = endpoints[i];
+    return endpoint    
+    
+    
+  }
 
   function securityScheme(segOIS){
     let securitySchemesMap = [];
@@ -137,19 +149,22 @@ export function Upload({ children }) {
   }
   return (
     <>
-      <h1>OIS Explorer</h1>
+    <img src="airnodeInvert.png" margin="0px" padding="0px"></img>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridGap: '50px'}}>
+      <h1 style={{fontSize: "50px"}}>OIS Explorer</h1>
 
-      <input type="file" onChange={handleChange} />
+      <input type="file" onChange={handleChange}  style={{ margin: 'auto'}}/>
+    </div>
       <br />
       <div>
       {/* {"uploaded file content -- " + files} */}
-      <Panel style={{ padding: '1rem 0 0 0 ', width: '50%' }}>
-      <div style={{  marginTop: 'none', margin: 'auto', textAlign: 'left', width: '100%', height: '100%' }}>
-        <h4>Node Settings</h4>
+      <Panel style={{ padding: '1rem 0 0 0 ', width: '50%', height: '100%' }}>
+      <div style={{  marginTop: 'none', margin: 'auto', textAlign: 'left', width: '100%', height: '100%', gridAutoColumns: "2", gridAutoFlow: "dense" }}>
+        <h4>Airnode Settings</h4>
         {segOIS && (
           <div style={{ display: "flex", fontSize: '11px'}}>
           <ul>
-            <li> Node Version: {segOIS.nodeSettings.nodeVersion}</li>
+            <li> Airnode Release: {segOIS.nodeSettings.nodeVersion}</li>
             <li> Cloud Provider: {segOIS.nodeSettings.cloudProvider}</li>
             <li> Region: {segOIS.nodeSettings.region}</li>
             <li> Stage: {segOIS.nodeSettings.stage}</li>
@@ -158,7 +173,8 @@ export function Upload({ children }) {
                 <li>ChainID: {segOIS.nodeSettings.chains[0].id}</li>
                 <li>Provider: 
                   <ul>
-                    <li>Name: {segOIS.nodeSettings.chains[0].providers.name}</li>
+                    <li>Name: {segOIS.nodeSettings.chains[0].providers[0].name}</li>
+                    <li>URL: {segOIS.nodeSettings.chains[0].providers[0].url}</li>
                   </ul>
                 </li>
                 <li>Contracts:
@@ -189,6 +205,7 @@ export function Upload({ children }) {
             <li> OIS Format: {segOIS.ois.oisFormat}</li>
             <li> API Url: {segOIS.ois.apiSpecifications.servers[0].url}</li>
             {securityScheme(segOIS).map((value, index) =>{
+              
               return <ul>
                 <li>Security Scheme: {value.name}</li>
                 <li>Security Type: {value.securityParams.type}</li>
@@ -216,13 +233,17 @@ export function Upload({ children }) {
 
       </Panel>
       <Panel style={{ padding: '1rem 0 0 0 ' }}>
-      <div style={{ margin: 'auto' }}>
-        <Table style={{ color: 'white' }}>
-            <thead>
+      <div >
+        <Table style={{ color: 'white',textAlign: 'left' }}>
+            <thead style={{textAlign: 'left'}}>
             
                 <tr>
                     <TableHead>Endpoint ID</TableHead>
                     <TableHead> Endpoint Name </TableHead>
+                    <TableHead></TableHead>
+                    <TableHead></TableHead>
+                    <TableHead></TableHead>
+                    <TableHead></TableHead>
                 </tr>
             </thead>
             <tbody>
@@ -232,15 +253,148 @@ export function Upload({ children }) {
         {segOIS && (
           <>
           {segOIS.requests.map((value, i) => {
-            console.log(value);
-            return <tr>
+            
+            let matchedEndpoint = matchEndpoints(segOIS.ois.endpoints, value.endpointName, i)
+            return <><tr>
             <TableData>
               {value.endpointId}
             </TableData>
             <TableData>
               {value.endpointName}
             </TableData>
+            
+            {/* <ul>
+              <ul>
+                <li> Method: {matchedEndpoint.operation.method}</li>
+               
+                  <>
+                  <li>Parameters: </li>
+                  <ul>
+                  {matchedEndpoint.fixedOperationParameters && (
+                    <>
+                      {matchedEndpoint.fixedOperationParameters.map((value,index) => {
+                        return <li>Fixed Parameter: {matchedEndpoint.fixedOperationParameters[index].name}</li>
+                      })}
+                      </>
+                  )}
+                  {matchedEndpoint.parameters && (
+                    <>
+                    {matchedEndpoint.parameters.map((value,index) => {
+                      return <>
+                      <li>Parameter: {matchedEndpoint.parameters[index].name}</li>
+                      <ul>
+                        <li>Name: {matchedEndpoint.parameters[index].operationParameter.name}</li>
+                      </ul>
+                      </>
+                    })}
+                    </>
+                  )}
+                  {matchedEndpoint.reservedParameters && (
+                    <>
+                    {matchedEndpoint.reservedParameters.map((value,index) => {
+                      return <li>Reserved Parameter: {matchedEndpoint.reservedParameters[index].name}</li>
+                     
+                    })}
+                    </>
+                    )}
+                  </ul>
+                  </>
+                  
+                
+              </ul>
+            </ul> */}
+
             </tr>
+            <tr style={{ marginLeft: '1em'}}>
+            <div style={{width: '50%', justifyContent: 'center', fontSize: '11px'}}>
+            <Table style={{ color: 'red' }}>
+            <thead>
+            
+                <tr>
+                    
+                    <th>Method: </th>
+                    <th> Parameters:  </th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr></tr>
+              <tr>
+                {matchedEndpoint.operation.method}
+              </tr>
+              <tr>
+                {matchedEndpoint.fixedOperationParameters && (
+                  <>
+                    {matchedEndpoint.fixedOperationParameters.map((value,index) => {
+                      return <td>Fixed Parameter: {matchedEndpoint.fixedOperationParameters[index].name}</td>
+                    })}
+                    {matchedEndpoint.parameters && (
+                    <>
+                    {matchedEndpoint.parameters.map((value,index) => {
+                      return <>
+                      <td>Parameter: {matchedEndpoint.parameters[index].name}</td>
+                      
+                      <td>Operation Parameter: {matchedEndpoint.parameters[index].operationParameter.name}</td>
+                      
+                      </>
+                    })}
+                    </>
+                  )}
+                  {matchedEndpoint.reservedParameters && (
+                    <>
+                    {matchedEndpoint.reservedParameters.map((value,index) => {
+                      return <td>Reserved Parameter: {matchedEndpoint.reservedParameters[index].name}</td>
+                     
+                    })}
+                    </>
+                    )}
+                  </>
+                )}
+              </tr>
+            </tbody>
+            </Table>
+            </div>
+            </tr>
+            {/* <tr>
+              <TableData></TableData><TableData>
+                
+              </TableData>
+
+              <li> Method: {matchedEndpoint.operation.method}</li>
+               
+                  <>
+                  <li>Parameters: </li>
+                  <ul>
+                  {matchedEndpoint.fixedOperationParameters && (
+                    <>
+                      {matchedEndpoint.fixedOperationParameters.map((value,index) => {
+                        return <li>Fixed Parameter: {matchedEndpoint.fixedOperationParameters[index].name}</li>
+                      })}
+                      </>
+                  )}
+                  {matchedEndpoint.parameters && (
+                    <>
+                    {matchedEndpoint.parameters.map((value,index) => {
+                      return <>
+                      <li>Parameter: {matchedEndpoint.parameters[index].name}</li>
+                      <ul>
+                        <li>Name: {matchedEndpoint.parameters[index].operationParameter.name}</li>
+                      </ul>
+                      </>
+                    })}
+                    </>
+                  )}
+                  {matchedEndpoint.reservedParameters && (
+                    <>
+                    {matchedEndpoint.reservedParameters.map((value,index) => {
+                      return <li>Reserved Parameter: {matchedEndpoint.reservedParameters[index].name}</li>
+                     
+                    })}
+                    </>
+                    )}
+                  </ul>
+                  </>
+            </tr> */}
+            </>
           })}
           
           </>          
