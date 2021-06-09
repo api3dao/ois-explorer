@@ -7,11 +7,10 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      <Upload>
+     
+      <Upload >
         <button>Upload Files</button>
       </Upload>
-      </header>
     </div>
   );
 }

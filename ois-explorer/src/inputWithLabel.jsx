@@ -4,12 +4,13 @@ import styled from 'styled-components';
 const Container = styled.div`
       display: flex;
       width: fit-content;
+      height: fit-content;
       max-width: 50%;
       flex-direction: column;
-      padding: 25px;
+      padding: 5px;
       position: relative;
       background: #343a40;
-      border-radius: 50px
+      border-radius: 0px
     `;
 
     const Label = styled.label`
@@ -31,10 +32,11 @@ const Container = styled.div`
     const Input2 = styled.input`
       border-radius: 0;
       display: flex;
-      font-size: fit-content;
+      font-size-min: 5px;
+      font-size: 12px;
       line-height: 25px;
       text-shadow: none;
-
+      
       border: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.15);
       background: #343a40;
