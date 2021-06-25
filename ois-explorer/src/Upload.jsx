@@ -47,7 +47,7 @@ const styledText = css`
 
 const TableData = styled.td`
     border: 0px solid #FFFFFF;
-    padding: 3px 10px;
+    padding: 10px;
     font-size: 11px;
 `
 const Table = styled.table`
@@ -125,7 +125,7 @@ const Container = styled.div`
 const Container2 = styled.div`
     display: flex;
     width: fit-content;
-    max-width: 75%;
+    max-width: 100%;
     flex-direction: row;
     padding: 8px;
     position: relative;
@@ -297,9 +297,9 @@ export function Upload({ children }) {
       <input type="file" onChange={handleChange}  style={{ margin: 'auto'}}/>
     </div>
       <br />
-      <div style={{width: '75%', margin: '0 auto'}}>
+      <div style={{width: '100%', margin: '0 auto'}}>
       {/* {"uploaded file content -- " + files} */}
-      <Panel style={{ padding: '1rem 0 0 0 ', width: '50%', height: '100%', margin: '0 auto'}}>
+      <Panel style={{ padding: '1rem 0 0 0 ', width: 'min-content', height: '100%', margin: '0 auto'}}>
       {/* <div style={{  float: 'left', marginTop: 'none', margin: 'auto', textAlign: 'left', width: '100%', height: '100%' }}> */}
         <h4>Airnode Settings</h4>
         {segOIS && (
@@ -347,7 +347,7 @@ export function Upload({ children }) {
 
         {/* </div> */}
       </Panel>
-      <Panel style={{width: '50%', height: '100%'}}>
+      <Panel style={{ width: 'min-content', height: '100%'}}>
       <div style={{ marginTop: 'none',margin: 'auto', textAlign: 'left', width: '100%', height: '100%' }}>
         
       <h4>API Configuration</h4>
@@ -390,21 +390,22 @@ export function Upload({ children }) {
       </div>
 
       </Panel>
-      <Panel style={{ padding: '1rem 0 0 0 ' }}>
-      <div >
-        <Table style={{ color: 'white',textAlign: 'left' }}>
+      <Panel style={{ padding: '1rem 0 0 0 ', width: 'min-content', display: 'table',background: "linear-gradient(#4e4b5e, #696666)", flexDirection: 'column', margin: 'auto'}}>
+      
+        <Table style={{ color: 'white',textAlign: 'left', width: "min-content", }}>
+        
             <thead style={{textAlign: 'left'}}>
             
-                <tr>
+                {/* <tr> */}
                     {/* <TableHead>Endpoint ID</TableHead>
                     <TableHead> Endpoint Name </TableHead>
                     <TableHead></TableHead>
                     <TableHead></TableHead>
                     <TableHead></TableHead>
                     <TableHead></TableHead> */}
-                </tr>
+                {/* </tr> */}
             </thead>
-            <tbody style={{gridAutoColumns: "2", display: 'grid'}}>
+            <tbody style={{gridAutoColumns: "2", display: 'inline-block'}}>
           
            
         
@@ -414,9 +415,31 @@ export function Upload({ children }) {
             
               let matchedEndpoint = matchEndpoints(segOIS.ois.endpoints, value.endpointName, i)
               return <>
-              <Container style={{background: "linear-gradient(#4e4b5e, #696666)", width: '70%', display: 'grid',   margin: '0 auto'}}><tr>
+              {/* <Container style={{background: "linear-gradient(#4e4b5e, #696666)", width: 'min-content', maxWidth: '75%', display: 'grid'}}> */}
+              <tr>
               <div style={{width: '100%', fontSize: '11px'}}>
-              <TableData>
+              
+
+              
+              <Table style={{ color: 'white', width: "min-content", marginLeft: 'auto', marginRight: 'auto'  }}>
+              {/* <Container2 style={{borderRadius: '10px', width: '100%', flexDirection: 'row'}}> */}
+              <thead>              
+              </thead>
+              <tbody >
+              
+                <tr style={{width: "100%",  margin: '0 auto'}}>
+                {/* <h2>Method:</h2> */}
+                <td style={{width: "fit-content",  margin: '0 auto'}}>
+                
+                <TableData>
+                  <Container2 style={{flexDirection: 'row',  display: 'block', width: '100%', background: 'rgb(2,0,36)',background: 'linear-gradient(157deg, rgba(2,0,36,1) 0%, rgba(73,121,9,1) 44%, rgba(0,212,255,1) 100%)', textAlign: 'center'}}>
+                    <h2 style={{color: 'Black', textTransform: 'uppercase'}}>{matchedEndpoint.operation.method}</h2>
+                  </Container2>
+
+
+                </TableData>
+                
+                <TableData>
                 <Container style={{background: "linear-gradient(#3b3439, #3d012c)", width: 'fit-content', margin: '0 auto', float: "left"}}>
                 
                   <h3>{value.endpointName}</h3>
@@ -429,19 +452,6 @@ export function Upload({ children }) {
                   </div>
                 </Container>
               </TableData>
-
-              
-              <Table style={{ color: 'white' }}>
-              <Container2 style={{borderRadius: '10px', width: '100%', flexDirection: 'row'}}>
-              <thead>              
-              </thead>
-              <tbody>
-                <tr style={{width: "100%",  margin: '0 auto'}}>
-                {/* <h2>Method:</h2> */}
-                <td style={{width: "fit-content",  margin: '0 auto'}}>
-                  <Container2 style={{flexDirection: 'row',  display: 'block', width: '20%', background: 'rgb(2,0,36)',background: 'linear-gradient(157deg, rgba(2,0,36,1) 0%, rgba(73,121,9,1) 44%, rgba(0,212,255,1) 100%)', textAlign: 'center'}}>
-                    <h2 style={{color: 'Black', textTransform: 'uppercase'}}>{matchedEndpoint.operation.method}</h2>
-                  </Container2>
                 </td>   
                 
                 {/* <td style={{color: 'black',width: "fit-content"}}><h2>Parameters:</h2> </td> */}
@@ -450,54 +460,64 @@ export function Upload({ children }) {
 
                 <tr>
                           
-                  <table>
+                <table style={{marginLeft: 'auto',marginRight: 'auto'}}>
                   
-                  <Container2 >
+                  <Container2   style={{display: "table"}}>
                   {matchedEndpoint.fixedOperationParameters && (
                     <>
-                    <tr>
+                    <td>
+                    
                     <>
-                    {matchedEndpoint.fixedOperationParameters.length > 0 && (<></>)}
+                    {matchedEndpoint.fixedOperationParameters.length > 0 && (<> Fixed Operation Parameters:</>)}
                     </>
+                   
                       {matchedEndpoint.fixedOperationParameters.map((value,index) => {
-                        return  <Container2 style={{}}>
+                        return   <TableData ><Container2 style={{}}>
                         <h4 style={{background: 'rgba(114, 93, 227,0.2)', padding: '5px',  margin: 'auto',width: '50%'}}>{matchedEndpoint.fixedOperationParameters[index].operationParameter.name} :</h4>
                         
                         <Input placeholder={value.value} style={{height: "-moz-fit-content", widht: 'min-content'}}></Input>                        
                         
                         </Container2>
+                      </TableData>
                         
                     })}
-                    </tr>
-                      
-                      {matchedEndpoint.parameters && (
-                      <>
-                      
-                      <Container2>
-                        {/* {matchedEndpoint.parameters.length > 0 && (
-                          <h3>Parameter:</h3>
-                        )} */}
+                    </td>
+                    <>
+                    {matchedEndpoint.parameters && (
+                    <>
+                    <td>
+                    <Container2 style={{display: "table"}}>
+                    <>
+                    {matchedEndpoint.parameters.length > 0 && (<> Parameters:</>)}
+                    </>
                     
+                    {matchedEndpoint.parameters.map((value,index) => {
+                      return <>
+                      <tr> 
+                      <TableData>    
+                          <h4 style={{background: 'rgba(114, 93, 227,0.2)', padding: '5px'}}>{matchedEndpoint.parameters[index].name} :</h4>
+                          <Input style={{height: "-moz-fit-content", widht: '50%'}}></Input>                                                
+                      </TableData>
+                      </tr>
                       
-                      {matchedEndpoint.parameters.map((value,index) => {
-                        return <>
-                        <tr> 
-                          
-                            <h4 style={{background: 'rgba(114, 93, 227,0.2)', padding: '5px'}}>{matchedEndpoint.parameters[index].name} :</h4>
-                            <Input style={{height: "-moz-fit-content", widht: '50%'}}></Input>                                                
-                        </tr>
-                        
-                        {/* <td>{matchedEndpoint.parameters[index].operationParameter.name}</td> */}
-                        
-                        </>
-                      })}
-                      </Container2>
-                        
+                      {/* <td>{matchedEndpoint.parameters[index].operationParameter.name}</td> */}
                       
                       </>
+                    })}
+                    </Container2>
+                    </td>
+                      
+                    
+                    </>
                     )}
+                    </>
+                    <td>
                     {matchedEndpoint.reservedParameters && (
                       <>
+                    <>
+                    {matchedEndpoint.reservedParameters.length > 0 && (<> Reserved Parameters:</>)}
+                    </>
+                      
                       {matchedEndpoint.reservedParameters.map((value,index) => {
                         return <tr> 
                           
@@ -508,9 +528,11 @@ export function Upload({ children }) {
                       })}
                       </>
                       )}
+                    </td>
                     </>
                   )}
                 </Container2>
+                
                 </table>
                 </tr>
                 <tr>
@@ -518,12 +540,12 @@ export function Upload({ children }) {
                 
                 </tr>
               </tbody>
-              </Container2>
+              {/* </Container2> */}
               </Table>
               </div>
               </tr>
              
-              </Container>
+              {/* </Container> */}
               </>
             })}
             
@@ -532,7 +554,7 @@ export function Upload({ children }) {
           </tbody>
         
           </Table>
-          </div>
+          
           </Panel>
           </div>
           </div>
